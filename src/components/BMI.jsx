@@ -10,12 +10,29 @@ const BMI = () => {
 
     // calculate the bmi
     function calculateBMI(){
-        if(weight && height){
+        if(weight === ''){
+            //    alert("please enter the number"); 
+                toast.error(`it can't be null Please enter a numeric value here within the weight box`);
+            }
+        else if(height === ''){
+            //    alert("please enter the number"); 
+                toast.error(`it can't be null Please enter a numeric value here within the height box`);
+            }
+        else if(!(Number(weight))){
+        //    alert("please enter the number"); 
+                toast.error(`${weight} is not a number please enter a valid number here`);
+        }
+        else if(!(Number(height))){
+        //    alert("please enter the number"); 
+            toast.error(`${height} is not a number please enter a valid number here`);
+        }
+        else if(weight && height){
             // toast.success("Submitted Successfully")
             const weightkg = parseFloat(weight) * 0.453592;
             const heightm = parseFloat(height) * 0.0254;
             const bmivalue = (weightkg/(heightm * heightm)).toFixed(2);
             setbmi(bmivalue);
+            toast.success("Submit Successfull")
 
             // category
             if(bmivalue < 18.5){
@@ -40,6 +57,7 @@ const BMI = () => {
         setweight('');
         setheight('');
         setbmi(null);
+        setcategory(null)
         toast.success("Refresh Done")
     }
 
@@ -49,11 +67,11 @@ const BMI = () => {
             <h1 className='text-3xl text-black-500'>BMI CLACULATOR</h1>
             <div className='h-18 w-[80%] rounded-2xl flex flex-col'>
                 <h4 className='text-lg font-bold'>Weight(lbs)</h4>
-                <input type="text" value={weight} className='h-[100%] border-2 border-black rounded-[10px] bg-white outline-0 text-2xl' onChange={(e)=>{setweight(e.target.value)}}/>
+                <input type="text" placeholder='Enter Weight here.....' value={weight} className='h-[100%] border-2 border-black rounded-[10px] bg-white outline-0 text-2xl' onChange={(e)=>{setweight(e.target.value)}}/>
             </div>
             <div className='h-18 w-[80%] rounded-2xl flex flex-col'>
                 <h4 className='text-lg font-bold'>Height(in)</h4>
-                <input type="text" value={height} className='h-[100%] border-2 border-black rounded-[10px] outline-0 bg-white text-2xl' onChange={(e)=>setheight(e.target.value)}/>
+                <input type="text" placeholder='Enter Height here.....' value={height} className='h-[100%] border-2 border-black rounded-[10px] outline-0 bg-white text-2xl' onChange={(e)=>setheight(e.target.value)}/>
             </div>
             <button className='text-lg font-bold h-11 w-[80%] border-3 border-black rounded-2xl bg-blue-500 text-white' onClick={calculateBMI}>
                 Submit
